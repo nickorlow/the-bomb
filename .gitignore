@@ -1,0 +1,6 @@
+incremental_db/
+output_files/
+db/
+c5_pin_model_dump.txt
+obj_dir/
+text.bin
