@@ -3,7 +3,12 @@
 A serial driver POC for the ST7920 (128x64) LCD display
 written in SystemVerilog, runnable on an FPGA.
 
+
+Text Mode (now in another branch):
 ![FPGA connected to LCD displaying text "WHO DO YOU THINK YOU ARE? I AM!"](https://github.com/nickorlow/the-bomb/blob/main/.images/bomb.png?raw=true)
+
+Graphical Mode:
+![FPGA connected to LCD displaying text "This aggression will not stand man" along with an image of a bowling ball and a bowling pin](https://github.com/nickorlow/the-bomb/blob/main/.images/bomb_graphical.png?raw=true)
 
 ## Requirements
 
@@ -12,11 +17,9 @@ written in SystemVerilog, runnable on an FPGA.
 - Intel Quartus (only if running on FPGA)
 - Verilator (only if simulating)
 
-## Changing Display text
-You can change the demo text by editing `text.txt`. Each line
-should be less than or equal to 16 characters long (longer lines 
-will be wrapped). You should keep the number of lines to under 4 
-(anything over this will be vertically wrapped).
+## Changing Display image 
+Update image.png with another 128x64 monochrome image for this demo. For real 
+use, you can pass in the memory array directly. 
 
 ## Simulation testing
 

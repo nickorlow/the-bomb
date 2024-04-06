@@ -34,7 +34,6 @@ int main(int argc, char **argv) {
 
       if (sd.is_command_ready()) {
           std::cout << sd.get_command().to_string() << "\n";
-          getchar();
       }
 
     

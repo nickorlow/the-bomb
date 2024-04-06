@@ -59,6 +59,11 @@ public:
       // Write data
       ret += "WRITE RAM: ";
       ret += (char)command_bits;
+      ret += "(";
+      for (int i = 0; i < 8; i++) 
+          ret += ((command_bits >> (8 - 1 - i)) & 1) == 1 ? " 1 " : " 0 ";
+      ret += ") ";
+      return ret;
     }
 
     if (!rs && rw) {
@@ -70,6 +75,26 @@ public:
     }
 
     if (!rs && !rw) {
+      uint8_t disp_on_off_mask = 0b11111000 & command_bits;
+      if (disp_on_off_mask == 0b00001000) {
+        ret = "DISPLAY ON/OFF";
+        return ret;
+      }
+      
+      uint8_t set_func_mask = 0b11100000 & command_bits;
+      if (set_func_mask == 0b00100000) {
+        ret = "SET FUNCTION";
+        return ret;
+      }
+      
+      uint8_t set_ram_mask = 0b10000000 & command_bits;
+      if (set_ram_mask == 0b10000000) {
+        uint8_t val = 0b01111111 & command_bits;
+        ret = "SET RAM_ADDR ";
+        ret += std::to_string(val);
+        return ret;
+      }
+      
       ret = "Unknown Command";
     }
 

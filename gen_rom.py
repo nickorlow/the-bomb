@@ -1,21 +1,21 @@
-def main(input_file, output_file):
-    with open(input_file, 'rb') as infile:
-        with open(output_file, 'w') as outfile:
-            line_count = 0
-            while True:
-                byte = infile.read(1)
-                if not byte:
-                    break
-                binary_repr = format(ord(byte), '08b')
-                outfile.write(binary_repr + '\n')
-                line_count += 1
+from PIL import Image
 
-            while line_count < 64:
-                outfile.write('0' * 8 + '\n')
-                line_count += 1
+
+def image_to_bitmap(image_path, output_path):
+    img = Image.open(image_path)
+    img = img.convert('L')
+    width, height = img.size
+    with open(output_path, 'w') as f:
+        for y in range(height):
+            for x in range(width):
+                pixel = img.getpixel((x, y))
+                binary_pixel = '1' if pixel < 128 else '0'
+                f.write(binary_pixel)
+                if (x + 1) % 8 == 0:
+                    f.write('\n')
 
 
 if __name__ == "__main__":
-    input_file = "text.txt"
-    output_file = "text.bin"
-    main(input_file, output_file)
+    input_image = "image.png"
+    output_file = "image.bin"
+    image_to_bitmap(input_image, output_file)
