@@ -22,10 +22,10 @@ module st7920_driver (
     $readmemb("image.bin", memory);
   end
 
-  always_ff @(posedge sys_clk) begin
+  always_ff @(negedge sys_clk) begin
     if(counter[20] == 1) begin
         memory[c2] <= memory[c2] ^  8'b11111111;
-        c2 <= c2 + 1;
+        c2 <= (c2 + 1) % 1024;
         counter <= 0; 
     end else begin
         counter <= counter + 1;

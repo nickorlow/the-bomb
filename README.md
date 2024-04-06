@@ -8,7 +8,7 @@ Text Mode (now in another branch):
 ![FPGA connected to LCD displaying text "WHO DO YOU THINK YOU ARE? I AM!"](https://github.com/nickorlow/the-bomb/blob/main/.images/bomb.png?raw=true)
 
 Graphical Mode:
-![FPGA connected to LCD displaying text "This aggression will not stand man" along with an image of a bowling ball and a bowling pin](https://github.com/nickorlow/the-bomb/blob/main/.images/bomb_graphical.png?raw=true)
+![FPGA connected to LCD displaying text "This aggression will not stand man" along with an image of a bowling ball and a bowling pin](https://github.com/nickorlow/the-bomb/blob/main/.images/bomb_graphical.jpg?raw=true)
 
 ## Requirements
 
@@ -19,7 +19,8 @@ Graphical Mode:
 
 ## Changing Display image 
 Update image.png with another 128x64 monochrome image for this demo. For real 
-use, you can pass in the memory array directly. 
+use, you can pass in the memory array directly. The demo will take your image and 
+slowly XOR the pixels to show the screen dynamically updating.
 
 ## Simulation testing
 
