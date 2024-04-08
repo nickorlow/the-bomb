@@ -1,3 +1,6 @@
+`define DELAY_BITS 8 
+`define BOOTSTRAP_INSTRS 6 
+
 module st7920_serial_driver (
     input wire sys_clk,
     input wire sys_rst_n_ms,
