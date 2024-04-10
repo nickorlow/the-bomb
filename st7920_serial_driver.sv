@@ -1,11 +1,16 @@
 module st7920_serial_driver (
     input wire sys_clk,
     input wire sys_rst_n_ms,
-    input wire [7:0] memory [0:1023],
+    input wire [7:0] memory_in [0:1023],
     output logic lcd_clk,  // This goes to the E pin
     output logic lcd_data,  // This goes to the R/W pin
     output logic [5:0] led
 );
+
+  logic [$clog2(1024)-1:0] mem_idx;
+  logic [7:0] mem_buf;
+  logic [7:0] mem_buf2;
+  logic [7:0] memory [0:1023];
 
   logic start;
   logic [9:0] command;
@@ -17,7 +22,6 @@ module st7920_serial_driver (
   int i;
   int c;
   int line_cnt;
-  int line_idx;
 
 
   logic [9:0] commands[0:10];
@@ -53,12 +57,11 @@ module st7920_serial_driver (
     i = 0;
     c = 0;
     line_cnt = 0;
-    line_idx = 0;
     y = 0;
     x = 0;
   end
 
-  always_ff @(negedge lcd_clk) begin
+  always_ff @(posedge lcd_clk) begin
     if (sys_rst_n) begin
       if (i == 0 || c >= 24) begin
         if (i < `BOOTSTRAP_INSTRS) begin
@@ -112,7 +115,6 @@ module st7920_serial_driver (
       start <= 0;
       i <= 0;
       c <= 0;
-      line_idx <= 0;
       line_cnt <= 0;
       y <= 0;
       x <= 0;
@@ -127,6 +129,12 @@ module st7920_serial_driver (
     end else begin
       counter <= counter + 1;
     end
+
+    // debounce/metastable fix
+    memory[mem_idx-2] <= mem_buf2;
+    mem_buf2 <= mem_buf;
+    mem_buf <= memory_in[mem_idx];
+    mem_idx <= mem_idx + 1;
   end
 
 endmodule
